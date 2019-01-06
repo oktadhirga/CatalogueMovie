@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Catalogue Movie</string>
+    <string name="movie_title">Movie Title</string>
+    <string name="movie_desciption">Movie Description</string>
+    <string name="date_release">Release Date</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="now_playing">Now Playing</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="searching">Search</string>
+    <string name="detail">Detail</string>
+    <string name="share">Share</string>
+    <string name="change_language">Change Language</string>
+    <string name="release">Release : %1$s</string>
+</resources>

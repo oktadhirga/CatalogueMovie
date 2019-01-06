@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="8dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginBottom="4dp"
+    app:cardCornerRadius="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/image_film"
+            android:layout_width="154dp"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/movie_title"
+            android:scaleType="centerCrop"
+            tools:src="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/tv_title_film"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="@dimen/padding_horizontal"
+            android:layout_marginBottom="8dp"
+            android:layout_toEndOf="@id/image_film"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            tools:text="@string/movie_title"/>
+
+        <TextView
+            android:id="@+id/tv_desc_film"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_title_film"
+            android:layout_marginLeft="@dimen/padding_horizontal"
+            android:layout_marginRight="@dimen/padding_horizontal"
+            android:layout_marginBottom="8dp"
+            android:layout_toEndOf="@id/image_film"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            tools:text="@string/movie_desciption"/>
+
+        <TextView
+            android:id="@+id/tv_date_release"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_desc_film"
+            android:layout_marginLeft="@dimen/padding_horizontal"
+            android:layout_marginRight="@dimen/padding_horizontal"
+            android:layout_toEndOf="@id/image_film"
+            android:textAlignment="textEnd"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textStyle="italic"
+            tools:text="@string/date_release"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/padding_horizontal"
+            android:layout_toEndOf="@id/image_film"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btn_detail"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/detail" />
+            <Button
+                android:id="@+id/btn_share"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/share"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Catalogue Movie</string>
+    <string name="movie_title">Judul Film</string>
+    <string name="movie_desciption">Film Deskripsi</string>
+    <string name="date_release">Tanggal Rilis</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="now_playing">Putar Sekarang</string>
+    <string name="upcoming">Akan Datang</string>
+    <string name="searching">Cari</string>
+    <string name="detail">Detail</string>
+    <string name="share">Bagikan</string>
+    <string name="change_language">Ubah Bahasa</string>
+    <string name="release">Rilis : %1$s</string>
+</resources>
