@@ -1,4 +1,4 @@
-package com.dicoding.associate.cataloguemovie;
+package com.dicoding.associate.cataloguemovie.Adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -6,32 +6,34 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
+import com.dicoding.associate.cataloguemovie.Model.FilmModel;
+import com.dicoding.associate.cataloguemovie.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class FilmAdapterList extends RecyclerView.Adapter<FilmAdapterList.ListViewHolder> {
 
     private Context context;
-    private ArrayList<FilmItems> listFilm;
+    private ArrayList<FilmModel> listFilm;
 
     public FilmAdapterList(Context context) {
         this.context = context;
     }
 
-    public ArrayList<FilmItems> getListFilm() {
+    private ArrayList<FilmModel> getListFilm() {
         return listFilm;
     }
 
-    public void setListFilm(ArrayList<FilmItems> listFilm) {
+    public void setListFilm(ArrayList<FilmModel> listFilm) {
         this.listFilm = listFilm;
         notifyDataSetChanged();
     }
@@ -45,11 +47,11 @@ public class FilmAdapterList extends RecyclerView.Adapter<FilmAdapterList.ListVi
 
     @Override
     public void onBindViewHolder(@NonNull FilmAdapterList.ListViewHolder holder, int position) {
-        FilmItems items = getListFilm().get(position);
+        FilmModel items = getListFilm().get(position);
+
         Glide.with(context)
                 .load("http://image.tmdb.org/t/p/w92/" + items.getPosterPath())
-                .apply(new RequestOptions().override(54, 70))
-                .into(holder.imageFilm);
+                .into(holder.imgMovie);
         holder.tvTitleFilm.setText(items.getTitle());
         holder.tvDescFilm.setText(items.getDesc());
         holder.tvDateRelease.setText(setDateFormat(items.getDateRelease()));
@@ -76,12 +78,12 @@ public class FilmAdapterList extends RecyclerView.Adapter<FilmAdapterList.ListVi
         return getListFilm().size();
     }
 
-    public class ListViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageFilm;
+    class ListViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitleFilm, tvDescFilm, tvDateRelease;
-        public ListViewHolder(View itemView) {
+        CircleImageView imgMovie;
+        ListViewHolder(View itemView) {
             super(itemView);
-            imageFilm = itemView.findViewById(R.id.image_film);
+            imgMovie = itemView.findViewById(R.id.img_movie);
             tvTitleFilm = itemView.findViewById(R.id.tv_title_film);
             tvDescFilm = itemView.findViewById(R.id.tv_desc_film);
             tvDateRelease = itemView.findViewById(R.id.tv_date_release);

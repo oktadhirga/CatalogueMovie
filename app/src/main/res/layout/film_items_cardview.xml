@@ -13,12 +13,12 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="154dp"
         android:padding="8dp">
 
         <ImageView
             android:id="@+id/image_film"
-            android:layout_width="154dp"
+            android:layout_width="92dp"
             android:layout_height="match_parent"
             android:contentDescription="@string/movie_title"
             android:scaleType="centerCrop"
@@ -29,15 +29,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/padding_horizontal"
-            android:layout_marginTop="8dp"
             android:layout_marginRight="@dimen/padding_horizontal"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="4dp"
             android:layout_toEndOf="@id/image_film"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textStyle="bold"
-            tools:text="@string/movie_title"/>
+            tools:text="@string/movie_title" />
 
         <TextView
             android:id="@+id/tv_desc_film"
@@ -46,12 +45,22 @@
             android:layout_below="@id/tv_title_film"
             android:layout_marginLeft="@dimen/padding_horizontal"
             android:layout_marginRight="@dimen/padding_horizontal"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="4dp"
             android:layout_toEndOf="@id/image_film"
             android:ellipsize="end"
-            android:maxLines="3"
+            android:maxLines="2"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            tools:text="@string/movie_desciption"/>
+            tools:text="@string/movie_desciption" />
+
+        <TextView
+            android:id="@+id/tv_vote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_desc_film"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@id/image_film"
+            android:text="@string/vote"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tv_date_release"
@@ -62,9 +71,8 @@
             android:layout_marginRight="@dimen/padding_horizontal"
             android:layout_toEndOf="@id/image_film"
             android:textAlignment="textEnd"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textStyle="italic"
-            tools:text="@string/date_release"/>
+            android:textSize="12sp"
+            tools:text="@string/date_release" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,6 +81,7 @@
             android:layout_marginStart="@dimen/padding_horizontal"
             android:layout_toEndOf="@id/image_film"
             android:orientation="horizontal">
+
             <Button
                 android:id="@+id/btn_detail"
                 style="@style/Widget.AppCompat.Button.Colored"
@@ -80,13 +89,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/detail" />
+
             <Button
                 android:id="@+id/btn_share"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/share"/>
+                android:text="@string/share" />
 
         </LinearLayout>
 

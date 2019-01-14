@@ -1,7 +1,10 @@
-package com.dicoding.associate.cataloguemovie;
+package com.dicoding.associate.cataloguemovie.Listener;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import com.dicoding.associate.cataloguemovie.R;
 
 
 public class ItemClickSupport {
@@ -33,18 +36,18 @@ public class ItemClickSupport {
 
     private RecyclerView.OnChildAttachStateChangeListener mAttachListener = new RecyclerView.OnChildAttachStateChangeListener() {
         @Override
-        public void onChildViewAttachedToWindow(View view) {
+        public void onChildViewAttachedToWindow(@NonNull View view) {
             if (mOnItemClickListener != null) view.setOnClickListener(mOnClickListener);
             if (mOnItemLongClickListener != null) view.setOnLongClickListener(mOnLongClickListener);
         }
 
         @Override
-        public void onChildViewDetachedFromWindow(View view) {
+        public void onChildViewDetachedFromWindow(@NonNull View view) {
 
         }
     };
 
-    public ItemClickSupport(RecyclerView mRecyclerView) {
+    private ItemClickSupport(RecyclerView mRecyclerView) {
         this.mRecyclerView = mRecyclerView;
         this.mRecyclerView.setTag(R.id.item_click_support, this);
         this.mRecyclerView.addOnChildAttachStateChangeListener(mAttachListener);

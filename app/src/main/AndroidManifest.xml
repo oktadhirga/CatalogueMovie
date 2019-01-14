@@ -3,6 +3,7 @@
     package="com.dicoding.associate.cataloguemovie">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <permission android:name="com.dicoding.associate.cataloguemovie.READ_DATABASE" android:protectionLevel="normal" />
 
     <application
         android:allowBackup="true"
@@ -19,6 +20,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".FilmDetailActivity"></activity>
+        <provider
+            android:authorities="com.dicoding.associate.cataloguemovie"
+            android:name=".Provider.MovieProvider"
+            android:exported="true"
+            android:readPermission="com.dicoding.associate.cataloguemovie.READ_DATABASE" />
     </application>
 
 </manifest>

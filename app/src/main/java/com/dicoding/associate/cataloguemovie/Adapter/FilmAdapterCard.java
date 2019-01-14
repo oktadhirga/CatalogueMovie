@@ -1,4 +1,4 @@
-package com.dicoding.associate.cataloguemovie;
+package com.dicoding.associate.cataloguemovie.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.dicoding.associate.cataloguemovie.Listener.CustomOnItemClickListener;
+import com.dicoding.associate.cataloguemovie.FilmDetailActivity;
+import com.dicoding.associate.cataloguemovie.Model.FilmModel;
+import com.dicoding.associate.cataloguemovie.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,17 +28,17 @@ import java.util.Date;
 public class FilmAdapterCard extends RecyclerView.Adapter<FilmAdapterCard.CardViewViewHolder> {
 
     private Context context;
-    private ArrayList<FilmItems> listFilm;
+    private ArrayList<FilmModel> listFilm;
 
     public FilmAdapterCard(Context context) {
         this.context = context;
     }
 
-    public ArrayList<FilmItems> getListFilm() {
+    private ArrayList<FilmModel> getListFilm() {
         return listFilm;
     }
 
-    public void setListFilm(ArrayList<FilmItems> listFilm) {
+    public void setListFilm(ArrayList<FilmModel> listFilm) {
         this.listFilm = listFilm;
         notifyDataSetChanged();
     }
@@ -48,32 +52,27 @@ public class FilmAdapterCard extends RecyclerView.Adapter<FilmAdapterCard.CardVi
 
     @Override
     public void onBindViewHolder(@NonNull FilmAdapterCard.CardViewViewHolder holder, int position) {
-        final FilmItems items = getListFilm().get(position);
+        final FilmModel items = getListFilm().get(position);
         Glide.with(context)
-                .load("http://image.tmdb.org/t/p/w154/" + items.getPosterPath())
-                .apply(new RequestOptions().override(154, 200))
+                .load("http://image.tmdb.org/t/p/w92/" + items.getPosterPath())
+                .apply(new RequestOptions().override(92, 138))
                 .into(holder.imageFilm);
         holder.tvTitleFilm.setText(items.getTitle());
         holder.tvDescFilm.setText(items.getDesc());
         holder.tvDateRelease.setText(setDateFormat(items.getDateRelease()));
 
-        holder.btnDetail.setOnClickListener(new CustomOnItemClickListener(position, new CustomOnItemClickListener.OnItemClickCallBack() {
-            @Override
-            public void onItemClicked(View view, int position) {
-//                Toast.makeText(context, "Detail " + items.getTitle(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(view.getContext(), FilmDetailActivity.class);
-                intent.putExtra(FilmDetailActivity.EXTRA_FILM, items);
-                view.getContext().startActivity(intent);
-            }
+        String vote = context.getString(R.string.vote) + items.getVote();
+
+        holder.tvVote.setText(vote);
+
+        holder.btnDetail.setOnClickListener(new CustomOnItemClickListener(position, (view, position1) -> {
+            Intent intent = new Intent(view.getContext(), FilmDetailActivity.class);
+            intent.putExtra(FilmDetailActivity.EXTRA_FILM, items);
+            view.getContext().startActivity(intent);
         }));
 
 
-        holder.btnShare.setOnClickListener(new CustomOnItemClickListener(position, new CustomOnItemClickListener.OnItemClickCallBack() {
-            @Override
-            public void onItemClicked(View view, int position) {
-                Toast.makeText(context, "Share " + items.getTitle(), Toast.LENGTH_SHORT).show();
-            }
-        }));
+        holder.btnShare.setOnClickListener(new CustomOnItemClickListener(position, (view, position12) -> Toast.makeText(context, "Share " + items.getTitle(), Toast.LENGTH_SHORT).show()));
 
     }
 
@@ -97,16 +96,17 @@ public class FilmAdapterCard extends RecyclerView.Adapter<FilmAdapterCard.CardVi
         return getListFilm().size();
     }
 
-    public class CardViewViewHolder extends RecyclerView.ViewHolder {
+    class CardViewViewHolder extends RecyclerView.ViewHolder {
         ImageView imageFilm;
-        TextView tvTitleFilm, tvDescFilm, tvDateRelease;
+        TextView tvTitleFilm, tvDescFilm, tvDateRelease, tvVote;
         Button btnDetail, btnShare;
-        public CardViewViewHolder(View itemView) {
+        CardViewViewHolder(View itemView) {
             super(itemView);
             imageFilm = itemView.findViewById(R.id.image_film);
             tvTitleFilm = itemView.findViewById(R.id.tv_title_film);
             tvDescFilm = itemView.findViewById(R.id.tv_desc_film);
             tvDateRelease = itemView.findViewById(R.id.tv_date_release);
+            tvVote = itemView.findViewById(R.id.tv_vote);
             btnDetail = itemView.findViewById(R.id.btn_detail);
             btnShare = itemView.findViewById(R.id.btn_share);
         }

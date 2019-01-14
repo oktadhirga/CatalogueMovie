@@ -3,49 +3,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="8dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginBottom="4dp"
-    android:orientation="horizontal">
+    android:background="@drawable/custom_ripple"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingLeft="@dimen/padding_horizontal"
+    android:paddingTop="8dp"
+    android:paddingRight="@dimen/padding_horizontal"
+    android:paddingBottom="8dp">
 
-    <ImageView
-        android:id="@+id/image_film"
-        android:layout_width="54dp"
-        android:layout_height="70dp"
-        android:contentDescription="@string/movie_title"
-        android:scaleType="centerCrop"
-        tools:src="@color/colorPrimaryDark"/>
-    <LinearLayout
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_movie"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:tint="@android:color/darker_gray"
+        tools:src="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/tv_title_film"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginRight="8dp"
-        android:layout_toEndOf="@id/image_film"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/tv_title_film"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textStyle="bold"
-            tools:text="@string/movie_title"/>
-        <TextView
-            android:id="@+id/tv_desc_film"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textSize="12sp"
-            tools:text="@string/movie_desciption"/>
-        <TextView
-            android:id="@+id/tv_date_release"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            tools:text="@string/date_release"/>
-    </LinearLayout>
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@id/img_movie"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        tools:text="@string/movie_title" />
+
+    <TextView
+        android:id="@+id/tv_desc_film"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title_film"
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@id/img_movie"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="12sp"
+        tools:text="@string/movie_desciption" />
+
+    <TextView
+        android:id="@+id/tv_date_release"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_desc_film"
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@id/img_movie"
+        android:textSize="12sp"
+        tools:text="@string/date_release" />
 
 </RelativeLayout>

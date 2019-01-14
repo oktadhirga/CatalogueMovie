@@ -14,4 +14,10 @@
     <string name="share">Share</string>
     <string name="change_language">Change Language</string>
     <string name="release">Release : %1$s</string>
+    <string name="movie_list">New Movie</string>
+    <string name="favorite">Favorite</string>
+    <string name="vote">Vote : </string>
+    <string name="no_favorite_movies">There are no Favorite Movies</string>
+    <string name="was_deleted">was deleted from Favorite lists</string>
+    <string name="was_added">was added to Favorite lists</string>
 </resources>

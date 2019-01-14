@@ -7,11 +7,17 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="now_playing">Putar Sekarang</string>
+    <string name="now_playing">Sedang Tayang</string>
     <string name="upcoming">Akan Datang</string>
     <string name="searching">Cari</string>
     <string name="detail">Detail</string>
     <string name="share">Bagikan</string>
     <string name="change_language">Ubah Bahasa</string>
     <string name="release">Rilis : %1$s</string>
+    <string name="movie_list">Film Baru</string>
+    <string name="favorite">Favorit</string>
+    <string name="vote">"Nilai : "</string>
+    <string name="no_favorite_movies">Tidak ada Film Favorit</string>
+    <string name="was_deleted">telah dihapus dari daftar Favorite</string>
+    <string name="was_added">telah ditambahkan ke daftar Favorit</string>
 </resources>

@@ -1,9 +1,10 @@
-package com.dicoding.associate.cataloguemovie;
+package com.dicoding.associate.cataloguemovie.Loader;
 
 
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
+import com.dicoding.associate.cataloguemovie.Model.FilmModel;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.SyncHttpClient;
 
@@ -14,9 +15,9 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class MyAsyncTaskLoader extends AsyncTaskLoader<ArrayList<FilmItems>> {
+public class MyAsyncTaskLoader extends AsyncTaskLoader<ArrayList<FilmModel>> {
 
-    private ArrayList<FilmItems> mData;
+    private ArrayList<FilmModel> mData;
     private boolean mHasResult = false;
     private String url;
 
@@ -28,7 +29,7 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<ArrayList<FilmItems>> {
 
     @Override
     protected void onStartLoading() {
-        if(takeContentChanged()) {
+        if (takeContentChanged()) {
             forceLoad();
         } else {
             deliverResult(mData);
@@ -36,7 +37,7 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<ArrayList<FilmItems>> {
     }
 
     @Override
-    public void deliverResult(ArrayList<FilmItems> data) {
+    public void deliverResult(ArrayList<FilmModel> data) {
         mData = data;
         mHasResult = true;
         super.deliverResult(data);
@@ -47,19 +48,19 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<ArrayList<FilmItems>> {
         super.onReset();
         onStopLoading();
         if (mHasResult) {
-            onReleaseResource(mData);
+            onReleaseResource();
             mData = null;
             mHasResult = false;
         }
     }
 
-    private void onReleaseResource(ArrayList<FilmItems> mData) {
+    private void onReleaseResource() {
     }
 
     @Override
-    public ArrayList<FilmItems> loadInBackground() {
+    public ArrayList<FilmModel> loadInBackground() {
         SyncHttpClient client = new SyncHttpClient();
-        final ArrayList<FilmItems> filmItems  = new ArrayList<>();
+        final ArrayList<FilmModel> filmItems = new ArrayList<>();
 
         client.get(url, new AsyncHttpResponseHandler() {
 
@@ -76,9 +77,9 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<ArrayList<FilmItems>> {
                     JSONObject responseObject = new JSONObject(result);
                     JSONArray results = responseObject.getJSONArray("results");
 
-                    for (int i=0; i < results.length(); i++) {
+                    for (int i = 0; i < results.length(); i++) {
                         JSONObject film = results.getJSONObject(i);
-                        FilmItems items = new FilmItems(film);
+                        FilmModel items = new FilmModel(film);
                         filmItems.add(items);
                     }
                 } catch (Exception e) {

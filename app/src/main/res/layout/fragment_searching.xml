@@ -2,43 +2,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/padding_container"
+    android:layout_height="wrap_content"
     tools:context=".SearchingFragment">
 
-    <LinearLayout
-        android:id="@+id/ll_search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="?android:attr/actionBarSize"
-        android:orientation="horizontal"
-        android:paddingTop="48dp"
-        android:paddingBottom="@dimen/padding_vertical">
-        <EditText
-            android:id="@+id/edt_search"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="7"
-            android:hint="@string/movie_title"/>
-        <Button
-            android:id="@+id/btn_search"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="@string/searching"/>
-    </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_searching"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/ll_search"
-        tools:listitem="@layout/film_items_list"/>
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/film_items_list" />
+
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:layout_marginTop="48dp"/>
 
 </RelativeLayout>
