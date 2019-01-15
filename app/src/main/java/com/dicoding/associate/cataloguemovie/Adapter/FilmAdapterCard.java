@@ -23,6 +23,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class FilmAdapterCard extends RecyclerView.Adapter<FilmAdapterCard.CardViewViewHolder> {
@@ -80,13 +81,13 @@ public class FilmAdapterCard extends RecyclerView.Adapter<FilmAdapterCard.CardVi
         //Set Release Date
         Date rawDate = null;
         try {
-            rawDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+            rawDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(date);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         String dateRelease = "";
-        if (rawDate != null) dateRelease = new SimpleDateFormat("MMM dd, yyyy").format(rawDate);
+        if (rawDate != null) dateRelease = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(rawDate);
         return dateRelease;
     }
 

@@ -1,6 +1,8 @@
 package com.dicoding.associate.cataloguemovie;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,9 +21,18 @@ import com.dicoding.associate.cataloguemovie.Model.FilmModel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.dicoding.associate.cataloguemovie.Database.DatabaseContract.CONTENT_URI;
+import static com.dicoding.associate.cataloguemovie.Database.DatabaseContract.FavoriteColumns.ID;
+import static com.dicoding.associate.cataloguemovie.Database.DatabaseContract.FavoriteColumns.OVERVIEW;
+import static com.dicoding.associate.cataloguemovie.Database.DatabaseContract.FavoriteColumns.POSTER_PATH;
+import static com.dicoding.associate.cataloguemovie.Database.DatabaseContract.FavoriteColumns.RELEASE_DATE;
+import static com.dicoding.associate.cataloguemovie.Database.DatabaseContract.FavoriteColumns.TITLE;
+import static com.dicoding.associate.cataloguemovie.Database.DatabaseContract.FavoriteColumns.VOTE_AVERAGE;
 
 public class FilmDetailActivity extends AppCompatActivity {
 
@@ -57,9 +68,9 @@ public class FilmDetailActivity extends AppCompatActivity {
 
         // Check isFavorite;
         favoriteHelper = new FavoriteHelper(FilmDetailActivity.this);
+
         favoriteHelper.open();
         isFavorite = favoriteHelper.isFavorite(film.getId());
-        favoriteHelper.close();
 
         Glide.with(this).load("http://image.tmdb.org/t/p/w154/" + film.getPosterPath()).into(ivDetailPoster);
 
@@ -94,18 +105,23 @@ public class FilmDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         String message;
         if (item.getItemId() == R.id.option_favorite) {
-            favoriteHelper.open();
             if (isFavorite) {
-                favoriteHelper.delete(film.getId());
+                getContentResolver().delete(Uri.parse(CONTENT_URI + "/" + film.getId()), null, null);
                 isFavorite = false;
                 message = film.getTitle() + " " + getString(R.string.was_deleted);
                 result = 101;
             } else {
-                favoriteHelper.insert(film);
+                ContentValues values = new ContentValues();
+                values.put(ID, film.getId());
+                values.put(POSTER_PATH, film.getPosterPath());
+                values.put(TITLE, film.getTitle());
+                values.put(OVERVIEW, film.getDesc());
+                values.put(RELEASE_DATE, film.getDateRelease());
+                values.put(VOTE_AVERAGE, film.getVote());
+                getContentResolver().insert(CONTENT_URI, values);
                 isFavorite = true;
                 message = film.getTitle() + " " + getString(R.string.was_added);
             }
-            favoriteHelper.close();
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }
 
@@ -126,24 +142,29 @@ public class FilmDetailActivity extends AppCompatActivity {
     private String setDateFormat(String date) {
         //Set Release Date
         Date rawDate = null;
-        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         try {
             rawDate = formatDate.parse(date);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        SimpleDateFormat newFormat = new SimpleDateFormat("MMM dd, yyyy");
+        SimpleDateFormat newFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
         String dateRelease = "";
         if (rawDate != null) dateRelease = newFormat.format(rawDate);
         return dateRelease;
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
+    public void onBackPressed() {
         Intent data = new Intent();
         setResult(result, data);
         finish();
+        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }
@@ -152,5 +173,13 @@ public class FilmDetailActivity extends AppCompatActivity {
     @Override
     public void supportInvalidateOptionsMenu() {
         super.supportInvalidateOptionsMenu();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (favoriteHelper != null) {
+            favoriteHelper.close();
+        }
     }
 }

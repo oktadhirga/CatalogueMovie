@@ -1,20 +1,9 @@
 package com.dicoding.associate.cataloguemovie.Model;
 
-import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import org.json.JSONObject;
-
-import static com.dicoding.associate.cataloguemovie.Database.DatabaseContract.FavoriteColumns.ID;
-import static com.dicoding.associate.cataloguemovie.Database.DatabaseContract.FavoriteColumns.OVERVIEW;
-import static com.dicoding.associate.cataloguemovie.Database.DatabaseContract.FavoriteColumns.POSTER_PATH;
-import static com.dicoding.associate.cataloguemovie.Database.DatabaseContract.FavoriteColumns.RELEASE_DATE;
-import static com.dicoding.associate.cataloguemovie.Database.DatabaseContract.FavoriteColumns.TITLE;
-import static com.dicoding.associate.cataloguemovie.Database.DatabaseContract.FavoriteColumns.VOTE_AVERAGE;
-import static com.dicoding.associate.cataloguemovie.Database.DatabaseContract.getColumnDouble;
-import static com.dicoding.associate.cataloguemovie.Database.DatabaseContract.getColumnInt;
-import static com.dicoding.associate.cataloguemovie.Database.DatabaseContract.getColumnString;
 
 public class FilmModel implements Parcelable {
 
@@ -30,7 +19,7 @@ public class FilmModel implements Parcelable {
         }
     };
 
-    private int id;
+    private String id;
     private String posterPath;
     private String title;
     private String desc;
@@ -45,7 +34,7 @@ public class FilmModel implements Parcelable {
             this.title = film.getString("title");
             this.desc = film.getString("overview");
             this.dateRelease = film.getString("release_date");
-            this.id = film.getInt("id");
+            this.id = film.getString("id");
             this.vote = film.getDouble("vote_average");
         } catch (Exception e) {
             e.printStackTrace();
@@ -57,7 +46,7 @@ public class FilmModel implements Parcelable {
         this.title = in.readString();
         this.desc = in.readString();
         this.dateRelease = in.readString();
-        this.id = in.readInt();
+        this.id = in.readString();
         this.vote = in.readDouble();
     }
 
@@ -81,7 +70,7 @@ public class FilmModel implements Parcelable {
         return dateRelease;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -89,7 +78,7 @@ public class FilmModel implements Parcelable {
         return vote;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -124,16 +113,8 @@ public class FilmModel implements Parcelable {
         dest.writeString(this.title);
         dest.writeString(this.desc);
         dest.writeString(this.dateRelease);
-        dest.writeInt(this.id);
+        dest.writeString(this.id);
         dest.writeDouble(this.vote);
     }
 
-    public FilmModel(Cursor cursor) {
-        this.id = getColumnInt(cursor, ID);
-        this.title = getColumnString(cursor, TITLE);
-        this.desc = getColumnString(cursor, OVERVIEW);
-        this.dateRelease = getColumnString(cursor, RELEASE_DATE);
-        this.posterPath = getColumnString(cursor, POSTER_PATH);
-        this.vote = getColumnDouble(cursor, VOTE_AVERAGE);
-    }
 }

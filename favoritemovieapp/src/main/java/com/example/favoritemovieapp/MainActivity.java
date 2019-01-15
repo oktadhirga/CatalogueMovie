@@ -16,7 +16,7 @@ import static com.example.favoritemovieapp.Database.DatabaseContract.CONTENT_URI
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private final int LOAD_NOTES_ID = 110;
+    private final int LOAD_FAVORITES_ID = 110;
     ListView lvFavorite;
     private FavoriteMovieAdapter favoriteMovieAdapter;
 
@@ -33,15 +33,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         favoriteMovieAdapter = new FavoriteMovieAdapter(this, null, true);
         lvFavorite.setAdapter(favoriteMovieAdapter);
 
-        LoaderManager.getInstance(this).initLoader(LOAD_NOTES_ID, null, this);
-//        getSupportLoaderManager().initLoader(LOAD_NOTES_ID, null, this);
+        LoaderManager.getInstance(this).initLoader(LOAD_FAVORITES_ID, null, this);
+//        getSupportLoaderManager().initLoader(LOAD_FAVORITES_ID, null, this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        LoaderManager.getInstance(this).restartLoader(LOAD_NOTES_ID, null, this);
-//        getSupportLoaderManager().restartLoader(LOAD_NOTES_ID, null, this);
+        LoaderManager.getInstance(this).restartLoader(LOAD_FAVORITES_ID, null, this);
+//        getSupportLoaderManager().restartLoader(LOAD_FAVORITES_ID, null, this);
     }
 
     @NonNull
@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        LoaderManager.getInstance(this).destroyLoader(LOAD_NOTES_ID);
-//        getSupportLoaderManager().destroyLoader((LOAD_NOTES_ID));
+        LoaderManager.getInstance(this).destroyLoader(LOAD_FAVORITES_ID);
+//        getSupportLoaderManager().destroyLoader((LOAD_FAVORITES_ID));
     }
 
 

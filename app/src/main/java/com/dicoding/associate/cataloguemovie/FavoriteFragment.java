@@ -2,6 +2,7 @@ package com.dicoding.associate.cataloguemovie;
 
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -17,7 +18,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.dicoding.associate.cataloguemovie.Adapter.FilmAdapterList;
-import com.dicoding.associate.cataloguemovie.Database.FavoriteHelper;
 import com.dicoding.associate.cataloguemovie.Listener.ItemClickSupport;
 import com.dicoding.associate.cataloguemovie.Model.FilmModel;
 
@@ -26,6 +26,14 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.dicoding.associate.cataloguemovie.Database.DatabaseContract.CONTENT_URI;
+import static com.dicoding.associate.cataloguemovie.Database.DatabaseContract.FavoriteColumns.ID;
+import static com.dicoding.associate.cataloguemovie.Database.DatabaseContract.FavoriteColumns.OVERVIEW;
+import static com.dicoding.associate.cataloguemovie.Database.DatabaseContract.FavoriteColumns.POSTER_PATH;
+import static com.dicoding.associate.cataloguemovie.Database.DatabaseContract.FavoriteColumns.RELEASE_DATE;
+import static com.dicoding.associate.cataloguemovie.Database.DatabaseContract.FavoriteColumns.TITLE;
+import static com.dicoding.associate.cataloguemovie.Database.DatabaseContract.FavoriteColumns.VOTE_AVERAGE;
 
 
 /**
@@ -39,9 +47,7 @@ public class FavoriteFragment extends Fragment {
     ProgressBar progressBar;
 
     FilmAdapterList adapter;
-    FavoriteHelper favoriteHelper;
     Toolbar toolbar;
-    ArrayList<FilmModel> filmModels;
 
     public FavoriteFragment() {
         // Required empty public constructor
@@ -58,7 +64,6 @@ public class FavoriteFragment extends Fragment {
         progressBar.setVisibility(View.GONE);
 
         adapter = new FilmAdapterList(this.getContext());
-        favoriteHelper = new FavoriteHelper(this.getContext());
 
         rvFavorite.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getContext()), DividerItemDecoration.VERTICAL));
         rvFavorite.setHasFixedSize(true);
@@ -67,19 +72,45 @@ public class FavoriteFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
-        favoriteHelper.open();
-        filmModels = favoriteHelper.getAllData();
-        favoriteHelper.close();
+        Cursor favoriteList = getContext().getContentResolver().query(CONTENT_URI, null, null, null, null);
+
+        assert favoriteList != null;
+        if (favoriteList.getCount() == 0) {
+            Toast.makeText(getContext(), getString(R.string.no_favorite_movies), Toast.LENGTH_SHORT).show();
+        }
+
+        //convert Cursor to Array List
+        ArrayList<FilmModel> filmModels = convertCursor(favoriteList);
 
         adapter.setListFilm(filmModels);
         adapter.notifyDataSetChanged();
 
-        if (filmModels.size() == 0) {
-            Toast.makeText(getContext(), getString(R.string.no_favorite_movies), Toast.LENGTH_SHORT).show();
-        }
-
         clickSupport(filmModels);
         return rootView;
+    }
+
+    private ArrayList<FilmModel> convertCursor(Cursor cursor) {
+        cursor.moveToFirst();
+        ArrayList<FilmModel> arrayList = new ArrayList<>();
+        FilmModel filmModel;
+        if (cursor.getCount() > 0) {
+            do {
+                filmModel = new FilmModel();
+                filmModel.setId(cursor.getString(cursor.getColumnIndexOrThrow(ID)));
+                filmModel.setPosterPath(cursor.getString(cursor.getColumnIndexOrThrow(POSTER_PATH)));
+                filmModel.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(TITLE)));
+                filmModel.setDesc(cursor.getString(cursor.getColumnIndexOrThrow(OVERVIEW)));
+                filmModel.setDateRelease(cursor.getString(cursor.getColumnIndexOrThrow(RELEASE_DATE)));
+                filmModel.setVote(cursor.getDouble(cursor.getColumnIndexOrThrow(VOTE_AVERAGE)));
+
+                arrayList.add(filmModel);
+                cursor.moveToNext();
+
+            } while (!cursor.isAfterLast());
+        }
+        cursor.close();
+
+        return arrayList;
     }
 
     private void clickSupport(ArrayList<FilmModel> data) {
